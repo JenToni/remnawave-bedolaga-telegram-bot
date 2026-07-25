@@ -2213,6 +2213,7 @@ def get_payment_methods_keyboard(amount_kopeks: int, language: str = DEFAULT_LAN
         )
         has_direct_payment_methods = True
 
+<<<<<<< HEAD
     # Sort method groups by DB sort_order, then flatten into keyboard rows.
     # Sub-option rows belonging to the same provider share a method_id and are
     # kept consecutive; sorting moves the whole group, not individual rows.
@@ -2224,6 +2225,43 @@ def get_payment_methods_keyboard(amount_kopeks: int, language: str = DEFAULT_LAN
             groups.append((method_id, [row]))
     groups.sort(key=lambda g: get_sort_order(g[0]))
     keyboard = [row for _, rows in groups for row in rows]
+=======
+    if settings.is_cispay_card_enabled():
+        cispay_card_name = settings.get_cispay_card_display_name()
+        keyboard.append(
+            [
+                InlineKeyboardButton(
+                    text=texts.t('PAYMENT_CISPAY_CARD', f'💳 {cispay_card_name}'),
+                    callback_data=_build_callback('cispay_card'),
+                )
+            ]
+        )
+        has_direct_payment_methods = True
+
+    if settings.is_cispay_sbp_enabled():
+        cispay_sbp_name = settings.get_cispay_sbp_display_name()
+        keyboard.append(
+            [
+                InlineKeyboardButton(
+                    text=texts.t('PAYMENT_CISPAY_SBP', f'📱 {cispay_sbp_name}'),
+                    callback_data=_build_callback('cispay_sbp'),
+                )
+            ]
+        )
+        has_direct_payment_methods = True
+
+    if settings.is_cispay_enabled() and not settings.is_cispay_card_enabled() and not settings.is_cispay_sbp_enabled():
+        cispay_name = settings.get_cispay_display_name()
+        keyboard.append(
+            [
+                InlineKeyboardButton(
+                    text=texts.t('PAYMENT_CISPAY', f'💳 {cispay_name}'),
+                    callback_data=_build_callback('cispay'),
+                )
+            ]
+        )
+        has_direct_payment_methods = True
+>>>>>>> upstream/main
 
     if settings.is_support_topup_enabled():
         keyboard.append(
