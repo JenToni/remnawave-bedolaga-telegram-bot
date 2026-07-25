@@ -2238,6 +2238,21 @@ def get_payment_methods_keyboard(amount_kopeks: int, language: str = DEFAULT_LAN
         )
         has_direct_payment_methods = True
 
+<<<<<<< HEAD
+=======
+    if settings.is_cispay_card_enabled():
+        cispay_card_name = settings.get_cispay_card_display_name()
+        keyboard.append(
+            [
+                InlineKeyboardButton(
+                    text=texts.t('PAYMENT_CISPAY_CARD', f'💳 {cispay_card_name}'),
+                    callback_data=_build_callback('cispay_card'),
+                )
+            ]
+        )
+        has_direct_payment_methods = True
+
+>>>>>>> upstream/main
     if settings.is_cispay_sbp_enabled():
         cispay_sbp_name = settings.get_cispay_sbp_display_name()
         keyboard.append(
@@ -2261,6 +2276,9 @@ def get_payment_methods_keyboard(amount_kopeks: int, language: str = DEFAULT_LAN
             ]
         )
         has_direct_payment_methods = True
+<<<<<<< HEAD
+>>>>>>> upstream/main
+=======
 >>>>>>> upstream/main
 
     if settings.is_support_topup_enabled():
